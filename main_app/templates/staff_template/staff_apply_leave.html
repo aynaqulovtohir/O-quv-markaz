@@ -1,0 +1,71 @@
+{% extends 'main_app/base.html' %}
+{% load static %}
+{% block page_title %}{{page_title}}{% endblock page_title %}
+
+{% block content %}
+
+{% extends 'main_app/base.html' %}
+{% load static %}
+
+{% block page_title %}{{ page_title }}{% endblock page_title %}
+{% block content %}
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <!-- general form elements -->
+                <div class="card card-dark">
+                    <div class="card-header">
+                        <h3 class="card-title">{{ page_title }}</h3>
+                    </div>
+
+                    {% include "main_app/form_template.html" with messages=messages form=form button_text="Ta'tilga ariza berish" %}
+                </div>
+                <!-- /.card -->
+
+                <div class="card card-default">
+                    <div class="card-header"><h3 class="card-title"><b>Ta'til tarixi</b></h3>
+                    <div class="table">
+
+                        <table class="table table-bordered table-hover">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Vaqt</th>
+                                    <th>Xabar</th>
+                                    <th>Holat</th>
+                                </tr>
+                            </thead>
+                            {% if leave_history %}
+                                {% for leave in leave_history %}
+                                    <tr>
+                                        <td>{{ forloop.counter }}</td>
+                                        <td>{{ leave.date }}</td>
+                                        <td>{{ leave.message }}</td>
+                                        <td>
+                                            {% if leave.status == 0 %}
+                                                <span class="badge badge-warning">Kutayotgan</span>
+                                            {% elif leave.status == 1 %}
+                                                <span class="badge badge-success">Qabul qilingan</span>
+                                            {% else %}
+                                                <span class="badge badge-danger">Rad etilgan</span>
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            {% else %}
+                                <tr>
+                                    <td colspan="4">Ta'til tarixi mavjud emas</td>
+                                </tr>
+                            {% endif %}
+                        </table>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock content %}
